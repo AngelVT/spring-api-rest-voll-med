@@ -1,0 +1,24 @@
+package med.voll.api.domain.consulta.validaciones;
+
+import jakarta.validation.ValidationException;
+import med.voll.api.domain.consulta.DatosConsulta;
+import org.springframework.stereotype.Component;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+
+@Component
+public class HorarioDeAnticipacion implements ValidadorDeConsultas {
+
+    public void validar(DatosConsulta datos) {
+
+        var ahora = LocalDateTime.now();
+        var horaDeConsulta = datos.fecha();
+
+        var diferenciaDe30Min = Duration.between(ahora, horaDeConsulta).toMinutes() < 30;
+
+        if(diferenciaDe30Min) {
+            throw  new ValidationException("Las consultas solo se pueden programar con al menos 30 minutos de anticipacion");
+        }
+    }
+}
