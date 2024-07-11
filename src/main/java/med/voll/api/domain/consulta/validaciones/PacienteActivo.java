@@ -1,7 +1,7 @@
 package med.voll.api.domain.consulta.validaciones;
 
 import jakarta.validation.ValidationException;
-import med.voll.api.domain.consulta.DatosRespuestaConsulta;
+import med.voll.api.domain.consulta.DatosConsulta;
 import med.voll.api.domain.paciente.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ public class PacienteActivo implements ValidadorDeConsultas{
     }
 
 
-    public void validar(DatosRespuestaConsulta datos) {
+    public void validar(DatosConsulta datos) {
         if(datos.idPaciente() == null) {
             return;
         }

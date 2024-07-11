@@ -7,26 +7,26 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public interface MedicoRepository extends JpaRepository<Medico, Long> {
     Page<Medico> findByActivoTrue(Pageable paginacion);
 
-    @Query(value = """
+    @Query("""
        select m from Medico m
-       where m.activo = 1
+       where m.activo = true
        and
        m.especialidad = :especialidad
        and
        m.id not in( 
            select c.medico.id from Consulta c
            where
-           c.fecha=:fecha
+           c.fecha = :fecha
        )
-       order by rand()
-       limit 1
-       """, nativeQuery = true)
-    Medico seleccionarMedicoConEspecialidadEnFecha(Especialidad especialidad, LocalDateTime fecha);
+       order by function('rand')
+       """)
+    List<Medico> seleccionarMedicoConEspecialidadEnFecha(Especialidad especialidad, LocalDateTime fecha);
 
     @Query("""
             select m.activo 

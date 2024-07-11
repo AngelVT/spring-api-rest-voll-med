@@ -1,10 +1,7 @@
 package med.voll.api.domain.consulta;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.paciente.Paciente;
 
@@ -29,5 +26,16 @@ public class Consulta {
     @JoinColumn(name = "paciente_id")
     private Paciente paciente;
 
+    private Boolean activo;
+
+    @Column(name = "motivo_cancelamiento")
+    @Enumerated(EnumType.STRING)
+    private MotivoCancelamiento motivoCancelamiento;
+
     private LocalDateTime fecha;
+
+    public void cancelar(MotivoCancelamiento motivoCancelamiento) {
+        this.activo = false;
+        this.motivoCancelamiento = motivoCancelamiento;
+    }
 }

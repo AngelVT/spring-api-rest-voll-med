@@ -10,10 +10,13 @@ import java.time.DayOfWeek;
 public class HorarioDeFuncionamiento implements ValidadorDeConsultas {
     public void validar(DatosConsulta datos) {
 
+        System.out.println(datos.fecha().getDayOfWeek());
+        System.out.println(datos.fecha().getHour());
+
         var domingo = DayOfWeek.SUNDAY.equals(datos.fecha().getDayOfWeek());
 
         var antesDeApertura = datos.fecha().getHour()<7;
-        var despuesDeCierre = datos.fecha().getHour()<19;
+        var despuesDeCierre = datos.fecha().getHour()>19;
 
         if(domingo || antesDeApertura || despuesDeCierre) {
             throw new ValidationException("El horario de atencion es de Lunes a Sabado ");
